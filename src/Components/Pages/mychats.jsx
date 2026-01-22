@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchChatsByClientId } from "../Slice/chatSlice";
+import { fetchChatsByClientId, deleteChat } from "../Slice/chatSlice";
 
 const MyChats = ({ userId }) => {
   const dispatch = useDispatch();
@@ -42,21 +42,33 @@ const MyChats = ({ userId }) => {
           {unique.map((chat) => {
             const last = chat.messages && chat.messages.length ? chat.messages[chat.messages.length - 1] : null;
             return (
-              <Link
-                to={`/chat/${encodeURIComponent(chat.itemId)}/${encodeURIComponent(chat.clientId)}/${encodeURIComponent(chat.sellerId)}`}
-                className="conversation-card"
-                key={chat._id}
-              >
-                <div className="conversation-left">
-                  <div className="conversation-title">Item: {chat.itemId}</div>
-                  <div className="conversation-preview">
-                    <div className="last-message">Seller: {chat.sellerId}</div>
+              <div className="conversation-card" key={chat._id}>
+                <Link
+                  to={`/chat/${encodeURIComponent(chat.itemId)}/${encodeURIComponent(chat.clientId)}/${encodeURIComponent(chat.sellerId)}`}
+                  className="conversation-link"
+                >
+                  <div className="conversation-left">
+                    <div className="conversation-title">Item: {chat.itemId}</div>
+                    <div className="conversation-preview">
+                      <div className="last-message">Seller: {chat.sellerId}</div>
+                    </div>
                   </div>
-                </div>
-                <div className="conversation-right">
-                  <div className="last-message">{last ? last.text : "Start conversation"}</div>
-                </div>
-              </Link>
+                  <div className="conversation-right">
+                    <div className="last-message">{last ? last.text : "Start conversation"}</div>
+                  </div>
+                </Link>
+                <button
+                  className="delete-chat-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (window.confirm("Are you sure you want to delete this chat?")) {
+                      dispatch(deleteChat(chat._id));
+                    }
+                  }}
+                >
+                  🗑️
+                </button>
+              </div>
             );
           })}
         </div>
