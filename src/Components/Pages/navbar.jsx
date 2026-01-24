@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { logoutUser } from '../Slice/authSlice'
 
-const Navbar = ({ user, userId, status }) => {
+const Navbar = ({ user, status }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
