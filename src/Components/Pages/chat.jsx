@@ -44,7 +44,7 @@ const Chat = ({ userId }) => {
     return (
       <div className="container">
         <h3>Invalid chat parameters</h3>
-        <p>Please open chat from a product or profile </p>
+        <p>Please open chat from a product or profile .</p>
       </div>
     )
   }
